@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { gerarCodigoPedido } from '../support/helpers'
+import { generateOrderCode } from '../support/helpers'
 //import { searchOrder } from '../support/helpers'  -> NÃ£o preciso importar novamente pq jÃ¡ tinha uma linha acima fazendo isso, logo passaria a funÃ§Ã£o por virgula.
 import {OrderLockupPage } from '../support/pages/OrderLockupPageOld' 
 
@@ -41,7 +41,7 @@ test.describe('Consultar Pedido', () => {
       status: 'APROVADO',
       color: 'Midnight Black',
       wheels: 'sport Wheels',
-      custumer: {
+      customer: {
         name: 'Livia Anjos',
         email: 'lsa@hotmail.com'
       },
@@ -78,9 +78,9 @@ test.describe('Consultar Pedido', () => {
       - paragraph: ${order.wheels}
       - heading "Dados do Cliente" [level=4]
       - paragraph: Nome
-      - paragraph: ${order.custumer.name}
+      - paragraph: ${order.customer.name}
       - paragraph: Email
-      - paragraph: ${order.custumer.email}
+      - paragraph: ${order.customer.email}
       - paragraph: Loja de Retirada
       - paragraph
       - paragraph: Data do Pedido
@@ -123,7 +123,7 @@ test.describe('Consultar Pedido', () => {
       status: 'REPROVADO',
       color: 'Midnight Black',
       wheels: 'sport Wheels',
-      custumer: {
+      customer: {
         name: 'Maria Chiquinha',
         email: 'chiquinha@teste.com.br'
       },
@@ -153,9 +153,9 @@ test.describe('Consultar Pedido', () => {
       - paragraph: ${order.wheels}
       - heading "Dados do Cliente" [level=4]
       - paragraph: Nome
-      - paragraph: ${order.custumer.name}
+      - paragraph: ${order.customer.name}
       - paragraph: Email
-      - paragraph: ${order.custumer.email}
+      - paragraph: ${order.customer.email}
       - paragraph: Loja de Retirada
       - paragraph
       - paragraph: Data do Pedido
@@ -199,7 +199,7 @@ test.describe('Consultar Pedido', () => {
       status: 'EM_ANALISE',
       color: 'Lunar White',
       wheels: 'aero Wheels',
-      custumer: {
+      customer: {
         name: 'Hermione Granger',
         email: 'leviosaaa@teste.com'
       },
@@ -229,9 +229,9 @@ test.describe('Consultar Pedido', () => {
       - paragraph: ${order.wheels}
       - heading "Dados do Cliente" [level=4]
       - paragraph: Nome
-      - paragraph: ${order.custumer.name}
+      - paragraph: ${order.customer.name}
       - paragraph: Email
-      - paragraph: ${order.custumer.email}
+      - paragraph: ${order.customer.email}
       - paragraph: Loja de Retirada
       - paragraph
       - paragraph: Data do Pedido
@@ -254,7 +254,7 @@ test.describe('Consultar Pedido', () => {
   test('Deve exibir mensagem quando o pedido não é encontrado', async ({ page }) => {
 
     // Test Data 
-    const order = gerarCodigoPedido()
+    const order = generateOrderCode()
 
     //Act
     const orderLockupPage = new OrderLockupPage(page)
