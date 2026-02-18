@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test'
 import { gerarCodigoPedido } from '../support/helpers'
+//import { searchOrder } from '../support/helpers'  -> NÃ£o preciso importar novamente pq jÃ¡ tinha uma linha acima fazendo isso, logo passaria a funÃ§Ã£o por virgula.
+import {OrderLockupPage } from '../support/pages/OrderLockupPage' 
 
-// AAA - Arrange, Act, Assert - Padrão de teste do playwright (Preparação, Ação, Verificação)
+// AAA - Arrange, Act, Assert - PadrÃ£o de teste do playwright (PreparaÃ§Ã£o, AÃ§Ã£o, VerificaÃ§Ã£o)
 test.describe('Consultar Pedido', () => {
 
   /*Para guardar conhecimento: Outros Hooks 
@@ -46,9 +48,16 @@ test.describe('Consultar Pedido', () => {
       payment: 'À Vista'
     }
 
-    //Act
-    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order.number)
-    await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+    //Act antigo (deixei apenas esse como exemplo)
+    /* await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order.number)
+    await page.getByRole('button', { name: 'Buscar Pedido' }).click() */
+
+    //Act new (sem page object)
+    //await searchOrder(page, order.number)
+
+    //Act PageObject
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order.number)
 
     //Assert
     await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -87,7 +96,7 @@ test.describe('Consultar Pedido', () => {
 
     const statusIcon = statusBadge.locator('svg')
     await expect(statusIcon).toHaveClass(/lucide-circle-check-big/)
-    /* Para guardar conhecimento: Outras formas de fazer a validação
+    /* Para guardar conhecimento: Outras formas de fazer a validaÃ§Ã£o
 
   - Forma usando Xpath
    const orderCode = page.locator('//p[text()="Pedido"]/..//p[text()="VLO-KSP8V3"]')
@@ -122,8 +131,8 @@ test.describe('Consultar Pedido', () => {
     }
 
     //Act
-    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order.number)
-    await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order.number)
 
     //Assert
     await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -198,8 +207,8 @@ test.describe('Consultar Pedido', () => {
     }
 
     //Act
-    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order.number)
-    await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order.number)
 
     //Assert
     await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -248,8 +257,8 @@ test.describe('Consultar Pedido', () => {
     const order = gerarCodigoPedido()
 
     //Act
-    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order)
-    await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order)
 
     //Assert
     await expect(page.locator('#root')).toMatchAriaSnapshot(`

@@ -1,3 +1,4 @@
+
 export function gerarCodigoPedido() {
     const prefixo = 'VLO';
   
@@ -11,3 +12,10 @@ export function gerarCodigoPedido() {
   
     return `${prefixo}-${parteLetras}${parteNumeros}`;
   }
+
+  /* Usado como alternativa ao PageObject
+  import { Page } from '@playwright/test'
+export async function searchOrder(page: Page, orderNumber: string) {
+  await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(orderNumber)
+  await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+}*/
